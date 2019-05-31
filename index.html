@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="normalize.css" type="text/css" rel="stylesheet">
+    <link href="styles.css" type="text/css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap" rel="stylesheet">
+    <title>Check Yo' Self</title>
+  </head>
+  <body>
+    <nav>
+      <h1>CHECK&nbsp<span class="nav__h1--title">YO'</span>&nbspSELF</h1>
+      <div class="nav--search">
+        <img class="nav__image--search" src="images/search.svg"/>
+        <input class="nav__input--search" id="nav__input--search" type="search" placeholder="Search">
+      </div>
+    </nav>
+    <main>
+      <form class="form--container">
+        <fieldset class="form__fieldset">
+          <legend>Task Input</legend>
+          <label class="form__label--title" for="form__input--title">Task Title</label>
+          <input class="form__input--title" id="form__input--title" type="text">
+          <ul class="form__ul--output" id="form__ul--output">
+          </ul>
+          <label class= "form__label--item" for="form__input--item">Task Item</label>
+          <div class="form__input--container">
+            <input class="form__input--item" id="form__input--item" type="text">
+            <button class="form__button--plus" id="form__button--plus">+</button>
+          </div>
+          <button class="form__buttons form__button--make-list" id="form__button--make-list" type="button">Make Task List</button>
+          <button class="form__buttons form__button--clear" id="form__button--clear" type="button">Clear All</button>
+        </fieldset>
+        <section class="form__section--filter">
+          <button class="form__buttons form__button--filter" id="form__button--filter" type="button">Filter by Urgency</button>
+        </section>
+      </form>
+    </main>
+    <output>
+    </output>
+  </body>
+  <script src="todo-list.js" type="text/javascript"></script>
+  <script src="main.js" type="text/javascript"></script>
+</html>
