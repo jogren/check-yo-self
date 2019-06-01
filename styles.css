@@ -127,12 +127,79 @@ label {
   margin: 0px 0px 10px -20px;
 }
 
+.form__button--plus:disabled,
+.form__buttons:disabled {
+  background-color: #C7D3D8;
+}
+
 /*OUTPUT*/
 
 output {
   background-color: #F3F6F7;
   grid-area: output;
- column-width: 13em;  
+  columns: 2 250px;
+  column-gap: 20px;
+  height: 100vh;
+  padding: 15px;
+}
+
+/*TO DO LIST*/
+
+article {
+  display: flex;
+  flex-direction: column;
+  border: 1px #C7D3D8 solid;
+  color: #1F1F3D;
+  width: 100%;
+  padding: 1px;
+  break-inside: avoid;
+  background-color: #FAFDFF;
+  margin-bottom: 15px;
+}
+
+header {
+  border-bottom: 1px #C7D3D8 solid;
+}
+
+h2 {
+  font-size: 18px;
+  color: #1F1F3D;
+  margin: 7px;
+}
+
+.article__section {
+
+}
+
+.article__list {
+  list-style: none;
+  margin-left: -20px;
+}
+
+.article__image--checkbox {
+  height: 15px;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px #C7D3D8 solid;
+}
+
+.footer--containers {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer--containers p {
+  font-size: 10px;
+  margin: 5px 5px 0px 5px;
+  color: #3C6577;
+}
+
+.footer__images {
+  height: 22px;
 }
 
 /*article {
