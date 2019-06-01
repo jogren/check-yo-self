@@ -164,16 +164,22 @@ header {
 h2 {
   font-size: 18px;
   color: #1F1F3D;
-  margin: 7px;
+  margin: 7px 10px;
 }
 
 .article__section {
 
 }
 
-.article__list {
+.section__text--populate {
+  margin: 0px 7px;
+}
+
+.section__li--populate {
   list-style: none;
-  margin-left: -20px;
+  margin-left: -25px;
+  margin-bottom: 15px;
+  display: flex;
 }
 
 .article__image--checkbox {

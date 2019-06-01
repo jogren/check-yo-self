@@ -39,18 +39,15 @@ function createToDo() {
   formInputTitle.value = "";
 }
 
-function displayToDoList({title, tasks, id}) {
+function displayToDoList(toDo) {
   outputField.insertAdjacentHTML('afterbegin',
-    `<article class="article__toDoList" data-id=${id}>
+    `<article class="article__toDoList" data-id=${toDo.id}>
       <header>
-        <h2>${title}</h2>
+        <h2>${toDo.title}</h2>
       </header>
-      <section class="article__section">
-        <ul>
-          <li class="article__list">
-            <input type="image" src="images/checkbox.svg" class="article__image--checkbox">
-          Don't ever play yourself.
-          </li>
+      <section class="section--container">
+        <ul class="section__ul--populate">
+          ${appendTaskToCard(toDo)}
         </ul>
       </section>
       <footer>
@@ -64,6 +61,7 @@ function displayToDoList({title, tasks, id}) {
         </div>
       </footer>   
     </article>`)
+  taskItems = [];
 }
 
 function repopulateToDoLists() {
@@ -73,12 +71,17 @@ function repopulateToDoLists() {
   }
 }
 
-// function addItemsToArray() {
-//   var newListItem = new Items(taskItemInput.value);
-//   taskItems.push(newListItem);
-//   appendTaskItems(newListItem);
-//   enableDisableButtons();
-// }
+function appendTaskToCard(toDo) {
+  var tasksIteration = '';
+  for (var i = 0; i < toDo.tasks.length; i++){
+    tasksIteration += `
+      <li class="section__li--populate">
+        <input type="image" src="images/checkbox.svg" class="article__image--checkbox">
+        <p class="section__text--populate">${toDo.tasks[i].task}</p>
+      </li>
+      `
+  } return tasksIteration;
+}
 
 function appendTaskItems(e) {
   e.preventDefault();
@@ -98,25 +101,6 @@ function appendTaskItems(e) {
   console.log(taskObject);
   taskItemInput.value = "";
 }
-
-// function appendTaskItems(newListItem) {
-//   var listItem = `
-//   <li class="form__list" data-id=${newListItem.id}>
-//     <input type="image" src="images/delete.svg" class="form__button--delete-task">
-//     ${newListItem.content}
-//   </li>`
-//   formOutput.innerHTML += listItem;
-//     taskItemInput.value = "";
-
-
-//   `
-//     <li class="sidebar__insert-list item" data-id="${newListItem.id}" id="">
-//       <img class="sidebar__insert-list--delete-button item" src="images/delete.svg" alt="Delete task from sidebar list"/>
-//       <p class="sidebar__insert-list--text item">${newListItem.content}</p>
-//     </li>`
-//     listArea.insertAdjacentHTML('beforeend', listText);
-//   taskItemInput.value = "";
-// }
 
 function deletePreviewTask(e) {
   if (e.target.classList.contains('form__button--delete-task')) {
