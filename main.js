@@ -27,6 +27,7 @@ function handleLoad() {
 function handleCardBtns(e) {
   deleteToDoLists(e);
   togglecheckbox(e);
+  toggleUrgency(e);
 }
 
 function refillArray() {
@@ -145,6 +146,15 @@ function togglecheckbox(e) {
     var checkboxPath = taskObject.checked ? 'images/checkbox-active.svg' : 'images/checkbox.svg'
     e.target.setAttribute('src', checkboxPath)
     enableDeleteBtn(targetTaskArray);
+  }
+}
+
+function toggleUrgency(e) {
+  if (e.target.classList.contains('footer__image--urgent')) {
+  var targetToDo = getToDoFromArray(e);
+  targetToDo.updateToDo(); 
+  var urgencyPath = targetToDo.urgency ? 'images/urgent-active.svg' : 'images/urgent.svg'
+  e.target.setAttribute('src', urgencyPath)
   }
 }
 
