@@ -210,19 +210,24 @@ footer {
   flex-direction: column;
 }
 
+
 .footer--containers p {
   font-size: 10px;
   margin: 5px 5px 0px 5px;
+}
+
+.inactive {
   color: #3C6577;
+}
+
+.active {
+  color: red;
 }
 
 .footer__images {
   height: 22px;
 }
 
-.color {
-  color: red;
-}
 
 /*article {
  display: inline-block;
