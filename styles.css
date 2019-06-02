@@ -220,6 +220,10 @@ footer {
   height: 22px;
 }
 
+.color {
+  color: red;
+}
+
 /*article {
  display: inline-block;
  margin:  0.25rem;

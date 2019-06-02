@@ -35,14 +35,14 @@ function refillArray() {
     return;
   } else {
     var newArray = JSON.parse(localStorage.getItem('toDoListArray')).map(function(array) {
-      return new ToDoList(array.title, array.tasks, array.id);
+      return new ToDoList(array.title, array.tasks, array.id, array.urgency);
     });
     toDoListArray = newArray
   }
 }
 
 function createToDo() {
-  var toDo = new ToDoList(formInputTitle.value, taskItems, Date.now());
+  var toDo = new ToDoList(formInputTitle.value, taskItems, Date.now(), false);
   toDoListArray.push(toDo);
   toDo.saveToStorage(toDoListArray);
   displayToDoList(toDo);
@@ -52,6 +52,8 @@ function createToDo() {
 
 function displayToDoList(toDo) {
   placeholderText.classList.add('hidden');
+  var urgency = toDo.urgency ? 'urgent-active.svg' : 'urgent.svg';
+  console.log(toDo.urgency);
   outputField.insertAdjacentHTML('afterbegin',
     `<article class="article__toDoList" data-id=${toDo.id}>
       <header>
@@ -64,8 +66,8 @@ function displayToDoList(toDo) {
       </section>
       <footer>
         <div class="footer--containers">
-          <input type="image" class="footer__images footer__image--urgent"src="images/urgent.svg">
-          <p>URGENT</p>
+          <input type="image" class="footer__images footer__image--urgent"src="images/${urgency}">
+          <p class="footer__text--urgent">URGENT</p>
         </div>
         <div class="footer--containers">
           <input type="image" class="footer__images footer__image--delete"src="images/delete.svg" disabled>
@@ -153,8 +155,15 @@ function toggleUrgency(e) {
   targetToDo.updateToDo(); 
   var urgencyPath = targetToDo.urgency ? 'images/urgent-active.svg' : 'images/urgent.svg'
   e.target.setAttribute('src', urgencyPath)
+  console.log(JSON.parse(localStorage.getItem('toDoListArray')));
+  // toggleUrgencyText(targetToDo);
   }
 }
+
+// function toggleUrgencyText(targetToDo) {
+//   var urgencyText = document.querySelector('.footer__text--urgent')
+//   targetToDo.urgency ? urgencyText.classList.add('color') : urgencyText.classList.remove('color');
+// }
 
 function enableDeleteBtn(targetTaskArray) {
   var completedArray = targetTaskArray.filter(function(task) {
