@@ -7,17 +7,27 @@ var formOutput = document.getElementById('form__ul--output');
 var makeListBtn = document.getElementById('form__button--make-list')
 var clearBtn = document.getElementById('form__button--clear');
 var outputField = document.getElementById('output')
+var placeholderText = document.querySelector('.placeholder');
 
-window.addEventListener('load', refillArray);
-window.addEventListener('load', repopulateToDoLists);
+
+window.addEventListener('load', handleLoad);
 taskItemBtn.addEventListener('click', appendTaskItems);
 formOutput.addEventListener('click', deletePreviewTask)
 makeListBtn.addEventListener('click', createToDo);
 clearBtn.addEventListener('click', clearAll);
 formInputTitle.addEventListener('keyup', handleBtns);
 taskItemInput.addEventListener('keyup', handleBtns);
-outputField.addEventListener('click', deleteToDoLists);
+outputField.addEventListener('click', handleCardBtns);
 
+function handleLoad() {
+  refillArray();
+  repopulateToDoLists();
+}
+
+function handleCardBtns(e) {
+  deleteToDoLists(e);
+  togglecheckbox(e);
+}
 
 function refillArray() {
   if (JSON.parse(localStorage.getItem('toDoListArray')) === null) {
@@ -40,6 +50,7 @@ function createToDo() {
 }
 
 function displayToDoList(toDo) {
+  placeholderText.classList.add('hidden');
   outputField.insertAdjacentHTML('afterbegin',
     `<article class="article__toDoList" data-id=${toDo.id}>
       <header>
@@ -65,7 +76,7 @@ function displayToDoList(toDo) {
 }
 
 function repopulateToDoLists() {
-    console.log(toDoListArray)
+  console.log(toDoListArray)
   for (var i = 0; i < toDoListArray.length; i++) {
     displayToDoList(toDoListArray[i]);
   }
@@ -74,13 +85,47 @@ function repopulateToDoLists() {
 function appendTaskToCard(toDo) {
   var tasksIteration = '';
   for (var i = 0; i < toDo.tasks.length; i++){
+  var checkbox = toDo.tasks[i].checked ? 'checkbox-active.svg' : 'checkbox.svg'
     tasksIteration += `
       <li class="section__li--populate">
-        <input type="image" src="images/checkbox.svg" class="article__image--checkbox">
+        <input type="image" src="images/${checkbox}" class="article__image--checkbox">
         <p class="section__text--populate">${toDo.tasks[i].task}</p>
       </li>
       `
-  } return tasksIteration;
+  } 
+  return tasksIteration;
+}
+
+function togglecheckbox(e) {
+  if (e.target.classList.contains('article__image--checkbox')) {
+  var targetToDo = getToDoFromArray(e);
+  console.log(targetToDo);
+  // var index = getTaskFromArray(targetToDo);
+  // console.log(targetToDo)
+  targetToDo.updateTask(); 
+  var checkboxPath = targetToDo.tasks.checked ? 'images/checkbox-active.svg' : 'images/checkbox.svg'
+  e.target.setAttribute('src', checkboxPath)
+  }
+}
+
+// function getListIndex(e) {
+//  var cardId = e.target.closest('.article__toDoList').getAttribute('data-id')
+//  return listIndex = toDoListArray.findIndex(function(toDo){
+//    return toDo.id == parseInt(cardId)
+//  })
+// }
+
+function getTaskFromArray(e, targetToDo) {
+  var taskId = e.target.closest('.form__list').getAttribute('data-id');
+  console.log(taskId)
+  var targetTask = findIndex(taskId);
+  return targetTask;
+}
+
+function findIndex(targetTask, targetToDo) {
+  return targetToDo.tasks.findIndex(function(task) {
+    return task.id == targetTask;
+  })
 }
 
 function appendTaskItems(e) {
@@ -100,13 +145,27 @@ function appendTaskItems(e) {
   taskItems.push(taskObject);
   console.log(taskObject);
   taskItemInput.value = "";
+  handleBtns();
 }
 
 function deletePreviewTask(e) {
   if (e.target.classList.contains('form__button--delete-task')) {
     e.target.closest('.form__list').remove();
   }
+    // deletePreviewTaskFromArray(e);
 }
+
+// function deletePreviewTaskFromArray(e) {
+//   var taskId = e.target.closest('.form__list').getAttribute('data-id');
+//   var filteredArray = taskItems.filter(function(items) {
+//     if (items.id !== taskId) {
+//       return items;
+//       console.log(items)
+//     }
+//   })
+//   console.log(filteredArray)
+//   taskItems = filteredArray;
+// }
 
 function deleteToDoLists(e) {
   if (e.target.classList.contains('footer__image--delete')) {
@@ -114,6 +173,7 @@ function deleteToDoLists(e) {
     var targetToDo = getToDoFromArray(e);
     targetToDo.deleteFromStorage(targetToDo);
   }
+  placeholder();
 }
 
 function getToDoFromArray(e) {
@@ -129,15 +189,26 @@ function findToDo(id) {
 }
 
 function handleBtns() {
-  makeListBtn.disabled = !formInputTitle.value && !formOutput.innerHTML === ""; 
+  makeListBtn.disabled = !formInputTitle.value && !taskItemInput.value;; 
   clearBtn.disabled = !formInputTitle.value && !taskItemInput.value;
   taskItemBtn.disabled = !taskItemInput.value;
 }
 
 function clearAll() {
-  console.log('test')
   formInputTitle.value = "";
-  taskItemInput.value = ""
+  taskItemInput.value = "";
   formOutput.innerHTML = "";
   handleBtns();
 }
+
+function placeholder() {
+  if (toDoListArray.length === 0) {
+    placeholderText.classList.remove('hidden');
+  }
+}
+
+// function enableDisableButtons() {
+//   taskItemInput.value === "" ? taskItemBtn.disabled = true : taskItemBtn.disabled = false;
+//   formInputTitle.value == "" || formOutput.innerHTML == "" ? makeListBtn.disabled = true : makeListBtn.disabled = false;
+//   taskItemInput.value == "" && formInputTitle.value == "" && formOutput.innerHTML == "" ? clearBtn.disabled = true : clearBtn.disabled = false;
+// }

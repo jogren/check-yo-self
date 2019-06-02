@@ -24,16 +24,10 @@ class ToDoList {
   }
 
   updateTask() {
+  this.tasks.checked = !this.tasks.checked;
+  this.saveToStorage(toDoListArray);
+
+  console.log(this.tasks.checked)
   }
+
 }
-
-
-
-// class Items {
-//   constructor(content) {
-//     this.content = content;
-//     this.done = false;
-//     this.id = Date.now();
-//     this.doneImg;
-//   }
-// }

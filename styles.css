@@ -143,6 +143,17 @@ output {
   padding: 15px;
 }
 
+.placeholder {
+  font-family: 'Indie Flower', cursive;
+  font-size: 60px;
+  position: absolute;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
 /*TO DO LIST*/
 
 article {
@@ -172,7 +183,7 @@ h2 {
 }
 
 .section__text--populate {
-  margin: 0px 7px;
+  margin: -2px 7px 0px 7px;
 }
 
 .section__li--populate {
