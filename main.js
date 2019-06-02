@@ -53,7 +53,6 @@ function createToDo() {
 function displayToDoList(toDo) {
   placeholderText.classList.add('hidden');
   var urgency = toDo.urgency ? 'urgent-active.svg' : 'urgent.svg';
-  console.log(toDo.urgency);
   outputField.insertAdjacentHTML('afterbegin',
     `<article class="article__toDoList" data-id=${toDo.id}>
       <header>
@@ -141,7 +140,6 @@ function togglecheckbox(e) {
     var targetTaskArray = getToDoFromArray(e).tasks;
     var targetTaskId = getTaskFromArray(e);
     var taskObject = findTask(targetTaskId, targetTaskArray);
-    console.log(taskObject);
     targetTodo.updateTask(taskObject.taskId);
     var checkboxPath = taskObject.checked ? 'images/checkbox-active.svg' : 'images/checkbox.svg'
     e.target.setAttribute('src', checkboxPath)
@@ -155,15 +153,15 @@ function toggleUrgency(e) {
   targetToDo.updateToDo(); 
   var urgencyPath = targetToDo.urgency ? 'images/urgent-active.svg' : 'images/urgent.svg'
   e.target.setAttribute('src', urgencyPath)
-  console.log(JSON.parse(localStorage.getItem('toDoListArray')));
-  // toggleUrgencyText(targetToDo);
+  toggleUrgencyText(targetToDo);
   }
 }
 
-// function toggleUrgencyText(targetToDo) {
-//   var urgencyText = document.querySelector('.footer__text--urgent')
-//   targetToDo.urgency ? urgencyText.classList.add('color') : urgencyText.classList.remove('color');
-// }
+function toggleUrgencyText(targetToDo) {
+  var urgencyText = document.querySelector('.footer__text--urgent')
+  urgencyText.classList.toggle('active');
+  urgencyText.classList.toggle('inactive');
+}
 
 function enableDeleteBtn(targetTaskArray) {
   var completedArray = targetTaskArray.filter(function(task) {
