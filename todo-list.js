@@ -4,6 +4,7 @@ class ToDoList {
     this.tasks = tasks;
     this.id = id;
     this.urgency = false;
+    this.completed = false;
   }
 
   saveToStorage(toDoListArray) {
@@ -28,6 +29,7 @@ class ToDoList {
       return item.taskId === id;
     })
   task.checked = !task.checked;
+
   this.saveToStorage(toDoListArray);
   }
 
