@@ -67,7 +67,7 @@ function displayToDoList(toDo) {
           <p>URGENT</p>
         </div>
         <div class="footer--containers">
-          <input type="image" class="footer__images footer__image--delete"src="images/delete.svg">
+          <input type="image" class="footer__images footer__image--delete"src="images/delete.svg" disabled>
           <p>DELETE</p>
         </div>
       </footer>   
@@ -80,44 +80,6 @@ function repopulateToDoLists() {
   for (var i = 0; i < toDoListArray.length; i++) {
     displayToDoList(toDoListArray[i]);
   }
-}
-
-function appendTaskToCard(toDo) {
-  var tasksIteration = '';
-  for (var i = 0; i < toDo.tasks.length; i++){
-  var checkbox = toDo.tasks[i].checked ? 'checkbox-active.svg' : 'checkbox.svg'
-    tasksIteration += `
-      <li class="section__li--populate" data-id=${toDo.tasks[i].taskId}>
-        <input type="image" src="images/${checkbox} " class="article__image--checkbox">
-        <p class="section__text--populate">${toDo.tasks[i].task}</p>
-      </li>
-      `
-  } 
-  return tasksIteration;
-}
-
-function togglecheckbox(e) {
-  console.log(toDoListArray)
-  if (e.target.classList.contains('article__image--checkbox')) {
-    var targetTodo = getToDoFromArray(e);
-    var targetTaskArray = getToDoFromArray(e).tasks;
-    var targetTaskId = getTaskFromArray(e);
-    var taskObject = findTask(targetTaskId, targetTaskArray);
-    targetTodo.updateTask(taskObject.taskId);
-    var checkboxPath = taskObject.checked ? 'images/checkbox-active.svg' : 'images/checkbox.svg'
-    e.target.setAttribute('src', checkboxPath)
-  }
-}
-
-function getTaskFromArray(e) {
-  var taskId = e.target.closest('li').getAttribute('data-id')
-  return taskId;
-}
-
-function findTask(targetTaskId, targetTaskArray) {
-  return targetTaskArray.find(function(task) {
-    return task.taskId == targetTaskId;
-  });
 }
 
 function appendTaskItems(e) {
@@ -157,6 +119,57 @@ function deletePreviewTask(e) {
 //   console.log(filteredArray)
 //   taskItems = filteredArray;
 // }
+
+function appendTaskToCard(toDo) {
+  var tasksIteration = '';
+  for (var i = 0; i < toDo.tasks.length; i++){
+  var checkbox = toDo.tasks[i].checked ? 'checkbox-active.svg' : 'checkbox.svg'
+    tasksIteration += `
+      <li class="section__li--populate" data-id=${toDo.tasks[i].taskId}>
+        <input type="image" src="images/${checkbox} " class="article__image--checkbox">
+        <p class="section__text--populate">${toDo.tasks[i].task}</p>
+      </li>
+      `
+  } 
+  return tasksIteration;
+}
+
+function togglecheckbox(e) {
+  if (e.target.classList.contains('article__image--checkbox')) {
+    var targetTodo = getToDoFromArray(e);
+    var targetTaskArray = getToDoFromArray(e).tasks;
+    var targetTaskId = getTaskFromArray(e);
+    var taskObject = findTask(targetTaskId, targetTaskArray);
+    console.log(taskObject);
+    targetTodo.updateTask(taskObject.taskId);
+    var checkboxPath = taskObject.checked ? 'images/checkbox-active.svg' : 'images/checkbox.svg'
+    e.target.setAttribute('src', checkboxPath)
+    enableDeleteBtn(targetTaskArray);
+  }
+}
+
+function enableDeleteBtn(targetTaskArray) {
+  var completedArray = targetTaskArray.filter(function(task) {
+    if(task.checked === true) {
+      return task;
+      console.log(completedArray);
+    }
+  })
+  if(targetTaskArray.length === completedArray.length) {
+    document.querySelector('.footer__image--delete').disabled = false;
+  }
+}
+
+function getTaskFromArray(e) {
+  var taskId = e.target.closest('li').getAttribute('data-id')
+  return taskId;
+}
+
+function findTask(targetTaskId, targetTaskArray) {
+  return targetTaskArray.find(function(task) {
+    return task.taskId == targetTaskId;
+  });
+}
 
 function deleteToDoLists(e) {
   if (e.target.classList.contains('footer__image--delete')) {
