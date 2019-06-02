@@ -105,21 +105,19 @@ function appendTaskItems(e) {
 function deletePreviewTask(e) {
   if (e.target.classList.contains('form__button--delete-task')) {
     e.target.closest('.form__list').remove();
+    deletePreviewTaskFromArray(e);
   }
-    // deletePreviewTaskFromArray(e);
 }
 
-// function deletePreviewTaskFromArray(e) {
-//   var taskId = e.target.closest('.form__list').getAttribute('data-id');
-//   var filteredArray = taskItems.filter(function(items) {
-//     if (items.id !== taskId) {
-//       return items;
-//       console.log(items)
-//     }
-//   })
-//   console.log(filteredArray)
-//   taskItems = filteredArray;
-// }
+function deletePreviewTaskFromArray(e) {
+  var itemId = e.target.closest('.form__list').getAttribute('data-id');
+  var filteredArray = taskItems.filter(function(item) {
+    if (item.taskId != itemId) {
+      return item;
+    }
+  })
+  taskItems = filteredArray;
+}
 
 function appendTaskToCard(toDo) {
   var tasksIteration = '';
