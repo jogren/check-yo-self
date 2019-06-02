@@ -23,11 +23,12 @@ class ToDoList {
   updateToDo() {
   }
 
-  updateTask() {
-  this.tasks.checked = !this.tasks.checked;
+  updateTask(id) {
+  var task = this.tasks.find(function(item) {
+      return item.taskId === id;
+    })
+  task.checked = !task.checked;
   this.saveToStorage(toDoListArray);
-
-  console.log(this.tasks.checked)
   }
 
 }

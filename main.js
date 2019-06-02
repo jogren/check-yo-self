@@ -87,8 +87,8 @@ function appendTaskToCard(toDo) {
   for (var i = 0; i < toDo.tasks.length; i++){
   var checkbox = toDo.tasks[i].checked ? 'checkbox-active.svg' : 'checkbox.svg'
     tasksIteration += `
-      <li class="section__li--populate">
-        <input type="image" src="images/${checkbox}" class="article__image--checkbox">
+      <li class="section__li--populate" data-id=${toDo.tasks[i].taskId}>
+        <input type="image" src="images/${checkbox} " class="article__image--checkbox">
         <p class="section__text--populate">${toDo.tasks[i].task}</p>
       </li>
       `
@@ -97,35 +97,27 @@ function appendTaskToCard(toDo) {
 }
 
 function togglecheckbox(e) {
+  console.log(toDoListArray)
   if (e.target.classList.contains('article__image--checkbox')) {
-  var targetToDo = getToDoFromArray(e);
-  console.log(targetToDo);
-  // var index = getTaskFromArray(targetToDo);
-  // console.log(targetToDo)
-  targetToDo.updateTask(); 
-  var checkboxPath = targetToDo.tasks.checked ? 'images/checkbox-active.svg' : 'images/checkbox.svg'
-  e.target.setAttribute('src', checkboxPath)
+    var targetTodo = getToDoFromArray(e);
+    var targetTaskArray = getToDoFromArray(e).tasks;
+    var targetTaskId = getTaskFromArray(e);
+    var taskObject = findTask(targetTaskId, targetTaskArray);
+    targetTodo.updateTask(taskObject.taskId);
+    var checkboxPath = taskObject.checked ? 'images/checkbox-active.svg' : 'images/checkbox.svg'
+    e.target.setAttribute('src', checkboxPath)
   }
 }
 
-// function getListIndex(e) {
-//  var cardId = e.target.closest('.article__toDoList').getAttribute('data-id')
-//  return listIndex = toDoListArray.findIndex(function(toDo){
-//    return toDo.id == parseInt(cardId)
-//  })
-// }
-
-function getTaskFromArray(e, targetToDo) {
-  var taskId = e.target.closest('.form__list').getAttribute('data-id');
-  console.log(taskId)
-  var targetTask = findIndex(taskId);
-  return targetTask;
+function getTaskFromArray(e) {
+  var taskId = e.target.closest('li').getAttribute('data-id')
+  return taskId;
 }
 
-function findIndex(targetTask, targetToDo) {
-  return targetToDo.tasks.findIndex(function(task) {
-    return task.id == targetTask;
-  })
+function findTask(targetTaskId, targetTaskArray) {
+  return targetTaskArray.find(function(task) {
+    return task.taskId == targetTaskId;
+  });
 }
 
 function appendTaskItems(e) {
@@ -143,7 +135,6 @@ function appendTaskItems(e) {
     checked: false
   }
   taskItems.push(taskObject);
-  console.log(taskObject);
   taskItemInput.value = "";
   handleBtns();
 }
