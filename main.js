@@ -9,7 +9,6 @@ var clearBtn = document.getElementById('form__button--clear');
 var outputField = document.getElementById('output')
 var placeholderText = document.querySelector('.placeholder');
 
-
 window.addEventListener('load', handleLoad);
 taskItemBtn.addEventListener('click', appendTaskItems);
 formOutput.addEventListener('click', deletePreviewTask)
@@ -42,6 +41,8 @@ function refillArray() {
 }
 
 function createToDo() {
+  // var tasksOnDOM = document.querySelectorAll('.form__list');
+  // Create helper function to make task object, pass through tasksOnDOM - Use map
   var toDo = new ToDoList(formInputTitle.value, taskItems, Date.now(), false);
   toDoListArray.push(toDo);
   toDo.saveToStorage(toDoListArray);
@@ -53,8 +54,10 @@ function createToDo() {
 function displayToDoList(toDo) {
   placeholderText.classList.add('hidden');
   var urgency = toDo.urgency ? 'urgent-active.svg' : 'urgent.svg';
+  var urgencyText = toDo.urgency ? 'active' : 'inactive';
+  var urgencyBackground = toDo.urgency ? 'background-active' : 'background-inactive';
   outputField.insertAdjacentHTML('afterbegin',
-    `<article class="article__toDoList" data-id=${toDo.id}>
+    `<article class="article__toDoList ${urgencyBackground}" data-id=${toDo.id}>
       <header>
         <h2>${toDo.title}</h2>
       </header>
@@ -66,7 +69,7 @@ function displayToDoList(toDo) {
       <footer>
         <div class="footer--containers">
           <input type="image" class="footer__images footer__image--urgent"src="images/${urgency}">
-          <p class="footer__text--urgent">URGENT</p>
+          <p class="footer__text--urgent ${urgencyText}">URGENT</p>
         </div>
         <div class="footer--containers">
           <input type="image" class="footer__images footer__image--delete"src="images/delete.svg" disabled>
@@ -108,6 +111,7 @@ function deletePreviewTask(e) {
     e.target.closest('.form__list').remove();
     deletePreviewTaskFromArray(e);
   }
+  handleBtns();
 }
 
 function deletePreviewTaskFromArray(e) {
@@ -124,10 +128,11 @@ function appendTaskToCard(toDo) {
   var tasksIteration = '';
   for (var i = 0; i < toDo.tasks.length; i++){
   var checkbox = toDo.tasks[i].checked ? 'checkbox-active.svg' : 'checkbox.svg'
+  var checkboxText = toDo.tasks[i].checked ? 'checkbox-text-active' : 'checkbox-text-inactive';
     tasksIteration += `
       <li class="section__li--populate" data-id=${toDo.tasks[i].taskId}>
         <input type="image" src="images/${checkbox} " class="article__image--checkbox">
-        <p class="section__text--populate">${toDo.tasks[i].task}</p>
+        <p class="section__text--populate ${checkboxText}">${toDo.tasks[i].task}</p>
       </li>
       `
   } 
@@ -143,8 +148,15 @@ function togglecheckbox(e) {
     targetTodo.updateTask(taskObject.taskId);
     var checkboxPath = taskObject.checked ? 'images/checkbox-active.svg' : 'images/checkbox.svg'
     e.target.setAttribute('src', checkboxPath)
+    togglecheckboxStyle(e);
     enableDeleteBtn(targetTaskArray);
   }
+}
+
+function togglecheckboxStyle(e) {
+  var checkboxText = e.target.closest('li').querySelector('.section__text--populate')
+  checkboxText.classList.toggle('checkbox-text-active');
+  checkboxText.classList.toggle('checkbox-text-inactive');
 }
 
 function toggleUrgency(e) {
@@ -153,14 +165,17 @@ function toggleUrgency(e) {
   targetToDo.updateToDo(); 
   var urgencyPath = targetToDo.urgency ? 'images/urgent-active.svg' : 'images/urgent.svg'
   e.target.setAttribute('src', urgencyPath)
-  toggleUrgencyText(targetToDo);
+  toggleUrgencyStyle(e, targetToDo);
   }
 }
 
-function toggleUrgencyText(targetToDo) {
-  var urgencyText = document.querySelector('.footer__text--urgent')
-  urgencyText.classList.toggle('active');
-  urgencyText.classList.toggle('inactive');
+function toggleUrgencyStyle(e, targetToDo) {
+  var urgencyText = e.target.closest('article').querySelector('.footer__text--urgent')
+  var urgencyCard = e.target.closest('article')
+    urgencyText.classList.toggle('active');
+    urgencyText.classList.toggle('inactive');
+    urgencyCard.classList.toggle('background-active');
+    urgencyCard.classList.toggle('background-inactive');
 }
 
 function enableDeleteBtn(targetTaskArray) {
@@ -208,8 +223,9 @@ function findToDo(id) {
 }
 
 function handleBtns() {
-  makeListBtn.disabled = !formInputTitle.value && !taskItemInput.value;; 
-  clearBtn.disabled = !formInputTitle.value && !taskItemInput.value;
+  var listItems = document.querySelectorAll('.form__list');
+  makeListBtn.disabled = !formInputTitle.value || !listItems.length; 
+  clearBtn.disabled = !formInputTitle.value && !taskItemInput.value && !listItems.length; 
   taskItemBtn.disabled = !taskItemInput.value;
 }
 
@@ -225,9 +241,3 @@ function placeholder() {
     placeholderText.classList.remove('hidden');
   }
 }
-
-// function enableDisableButtons() {
-//   taskItemInput.value === "" ? taskItemBtn.disabled = true : taskItemBtn.disabled = false;
-//   formInputTitle.value == "" || formOutput.innerHTML == "" ? makeListBtn.disabled = true : makeListBtn.disabled = false;
-//   taskItemInput.value == "" && formInputTitle.value == "" && formOutput.innerHTML == "" ? clearBtn.disabled = true : clearBtn.disabled = false;
-// }
