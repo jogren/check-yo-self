@@ -126,10 +126,11 @@ function appendTaskToCard(toDo) {
   var tasksIteration = '';
   for (var i = 0; i < toDo.tasks.length; i++){
   var checkbox = toDo.tasks[i].checked ? 'checkbox-active.svg' : 'checkbox.svg'
+  var checkboxText = toDo.tasks[i].checked ? 'checkbox-text-active' : 'checkbox-text-inactive';
     tasksIteration += `
       <li class="section__li--populate" data-id=${toDo.tasks[i].taskId}>
         <input type="image" src="images/${checkbox} " class="article__image--checkbox">
-        <p class="section__text--populate">${toDo.tasks[i].task}</p>
+        <p class="section__text--populate ${checkboxText}">${toDo.tasks[i].task}</p>
       </li>
       `
   } 
@@ -145,8 +146,15 @@ function togglecheckbox(e) {
     targetTodo.updateTask(taskObject.taskId);
     var checkboxPath = taskObject.checked ? 'images/checkbox-active.svg' : 'images/checkbox.svg'
     e.target.setAttribute('src', checkboxPath)
+    togglecheckboxStyle(e);
     enableDeleteBtn(targetTaskArray);
   }
+}
+
+function togglecheckboxStyle(e) {
+  var checkboxText = e.target.closest('li').querySelector('.section__text--populate')
+  checkboxText.classList.toggle('checkbox-text-active');
+  checkboxText.classList.toggle('checkbox-text-inactive');
 }
 
 function toggleUrgency(e) {

@@ -234,3 +234,13 @@ footer {
 .background-active {
   background-color: #FFE89D;
 }
+
+/*.checkbox-text-inactive {
+  font-style: normal;
+  color: black;
+}*/
+
+.checkbox-text-active {
+  color: #3C6577;
+  font-style: italic;
+}
