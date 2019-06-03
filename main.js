@@ -9,7 +9,6 @@ var clearBtn = document.getElementById('form__button--clear');
 var outputField = document.getElementById('output')
 var placeholderText = document.querySelector('.placeholder');
 
-
 window.addEventListener('load', handleLoad);
 taskItemBtn.addEventListener('click', appendTaskItems);
 formOutput.addEventListener('click', deletePreviewTask)
@@ -42,6 +41,8 @@ function refillArray() {
 }
 
 function createToDo() {
+  // var tasksOnDOM = document.querySelectorAll('.form__list');
+  // Create helper function to make task object, pass through tasksOnDOM - Use map
   var toDo = new ToDoList(formInputTitle.value, taskItems, Date.now(), false);
   toDoListArray.push(toDo);
   toDo.saveToStorage(toDoListArray);
@@ -110,6 +111,7 @@ function deletePreviewTask(e) {
     e.target.closest('.form__list').remove();
     deletePreviewTaskFromArray(e);
   }
+  handleBtns();
 }
 
 function deletePreviewTaskFromArray(e) {
@@ -221,8 +223,9 @@ function findToDo(id) {
 }
 
 function handleBtns() {
-  makeListBtn.disabled = !formInputTitle.value && !taskItemInput.value;; 
-  clearBtn.disabled = !formInputTitle.value && !taskItemInput.value;
+  var listItems = document.querySelectorAll('.form__list');
+  makeListBtn.disabled = !formInputTitle.value || !listItems.length; 
+  clearBtn.disabled = !formInputTitle.value && !taskItemInput.value && !listItems.length; 
   taskItemBtn.disabled = !taskItemInput.value;
 }
 
@@ -238,9 +241,3 @@ function placeholder() {
     placeholderText.classList.remove('hidden');
   }
 }
-
-// function enableDisableButtons() {
-//   taskItemInput.value === "" ? taskItemBtn.disabled = true : taskItemBtn.disabled = false;
-//   formInputTitle.value == "" || formOutput.innerHTML == "" ? makeListBtn.disabled = true : makeListBtn.disabled = false;
-//   taskItemInput.value == "" && formInputTitle.value == "" && formOutput.innerHTML == "" ? clearBtn.disabled = true : clearBtn.disabled = false;
-// }
