@@ -53,8 +53,10 @@ function createToDo() {
 function displayToDoList(toDo) {
   placeholderText.classList.add('hidden');
   var urgency = toDo.urgency ? 'urgent-active.svg' : 'urgent.svg';
+  var urgencyText = toDo.urgency ? 'active' : 'inactive';
+  var urgencyBackground = toDo.urgency ? 'background-active' : 'background-inactive';
   outputField.insertAdjacentHTML('afterbegin',
-    `<article class="article__toDoList" data-id=${toDo.id}>
+    `<article class="article__toDoList ${urgencyBackground}" data-id=${toDo.id}>
       <header>
         <h2>${toDo.title}</h2>
       </header>
@@ -66,7 +68,7 @@ function displayToDoList(toDo) {
       <footer>
         <div class="footer--containers">
           <input type="image" class="footer__images footer__image--urgent"src="images/${urgency}">
-          <p class="footer__text--urgent">URGENT</p>
+          <p class="footer__text--urgent ${urgencyText}">URGENT</p>
         </div>
         <div class="footer--containers">
           <input type="image" class="footer__images footer__image--delete"src="images/delete.svg" disabled>
@@ -153,14 +155,17 @@ function toggleUrgency(e) {
   targetToDo.updateToDo(); 
   var urgencyPath = targetToDo.urgency ? 'images/urgent-active.svg' : 'images/urgent.svg'
   e.target.setAttribute('src', urgencyPath)
-  toggleUrgencyText(targetToDo);
+  toggleUrgencyStyle(e, targetToDo);
   }
 }
 
-function toggleUrgencyText(targetToDo) {
-  var urgencyText = document.querySelector('.footer__text--urgent')
-  urgencyText.classList.toggle('active');
-  urgencyText.classList.toggle('inactive');
+function toggleUrgencyStyle(e, targetToDo) {
+  var urgencyText = e.target.closest('article').querySelector('.footer__text--urgent')
+  var urgencyCard = e.target.closest('article')
+    urgencyText.classList.toggle('active');
+    urgencyText.classList.toggle('inactive');
+    urgencyCard.classList.toggle('background-active');
+    urgencyCard.classList.toggle('background-inactive');
 }
 
 function enableDeleteBtn(targetTaskArray) {

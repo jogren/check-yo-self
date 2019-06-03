@@ -164,7 +164,7 @@ article {
   width: 100%;
   padding: 1px;
   break-inside: avoid;
-  background-color: #FAFDFF;
+  /*background-color: #FAFDFF;*/
   margin-bottom: 15px;
 }
 
@@ -210,6 +210,9 @@ footer {
   flex-direction: column;
 }
 
+.footer__images {
+  height: 22px;
+}
 
 .footer--containers p {
   font-size: 10px;
@@ -224,15 +227,10 @@ footer {
   color: red;
 }
 
-.footer__images {
-  height: 22px;
+.background-inactive {
+ background-color: #FAFDFF;
 }
 
-
-/*article {
- display: inline-block;
- margin:  0.25rem;
- padding:  1rem;
- width:  100%; 
- background:  #efefef;
-}*/
+.background-active {
+  background-color: #FFE89D;
+}
