@@ -6,16 +6,18 @@ var taskItemBtn = document.getElementById('form__button--plus');
 var formOutput = document.getElementById('form__ul--output');
 var makeListBtn = document.getElementById('form__button--make-list')
 var clearBtn = document.getElementById('form__button--clear');
+var searchInput = document.getElementById('nav__input')
 var outputField = document.getElementById('output')
-var placeholderText = document.querySelector('.placeholder');
+var placeholderText = document.querySelector('.output__p');
 
 window.addEventListener('load', handleLoad);
 taskItemBtn.addEventListener('click', appendTaskItems);
-formOutput.addEventListener('click', deletePreviewTask)
+formOutput.addEventListener('click', deletePreviewTask);
 makeListBtn.addEventListener('click', createToDo);
 clearBtn.addEventListener('click', clearAll);
 formInputTitle.addEventListener('keyup', handleBtns);
 taskItemInput.addEventListener('keyup', handleBtns);
+searchInput.addEventListener('keyup', handleSearch);
 outputField.addEventListener('click', handleCardBtns);
 
 function handleLoad() {
@@ -221,6 +223,38 @@ function findToDo(id) {
     return toDo.id == id;
   });
 }
+
+function handleSearch() {
+  outputField.innerHTML = '';
+  var searchText = searchInput.value.toLowerCase();
+  console.log(searchText);
+  searchAllFilter(searchText);
+  // if(starredIdeasBtn.innerHTML === 'View All Ideas') {
+  //   searchStarFilter(searchText);
+  // } 
+  // else { 
+  //   searchAllFilter(searchText);
+}
+
+function searchAllFilter(searchText) {
+  var filteredToDos = toDoListArray.filter(function(toDo) {
+    return (toDo.title.toLowerCase().includes(searchText)
+  );
+  });
+  filteredToDos.forEach(function(toDo) {
+    displayToDoList(toDo);
+  });
+};
+
+
+// function searchStarFilter(searchText) {
+//   var filteredIdeas = ideaArray.filter(function(idea) {
+//     return (idea.title.toLowerCase().includes(searchText) && idea.star === true || idea.body.toLowerCase().includes(searchText) && idea.star === true);
+//   });
+//   filteredIdeas.forEach(function(idea) {
+//     displayIdeaCard(idea);
+//   });
+// }
 
 function handleBtns() {
   var listItems = document.querySelectorAll('.form__list');

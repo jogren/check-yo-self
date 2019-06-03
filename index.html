@@ -9,14 +9,14 @@
   </head>
   <body>
     <nav>
-      <h1>CHECK&nbsp<span class="nav__h1--title">YO'</span>&nbspSELF</h1>
+      <h1>CHECK&nbsp<span class="nav__h1">YO'</span>&nbspSELF</h1>
       <div class="nav--search">
-        <img class="nav__image--search" src="images/search.svg"/>
-        <input class="nav__input--search" id="nav__input--search" type="search" placeholder="Search">
+        <img class="nav__image" src="images/search.svg"/>
+        <input class="nav__input" id="nav__input" type="search" placeholder="Search">
       </div>
     </nav>
     <main>
-      <form class="form--container">
+      <form class="form">
         <fieldset class="form__fieldset">
           <legend>Task Input</legend>
           <label class="form__label--title" for="form__input--title">Task Title</label>
@@ -24,20 +24,20 @@
           <ul class="form__ul--output" id="form__ul--output">
           </ul>
           <label class= "form__label--item" for="form__input--item">Task Item</label>
-          <div class="form__input--container">
+          <div class="form__div">
             <input class="form__input--item" id="form__input--item" type="text">
             <button class="form__button--plus" id="form__button--plus" disabled>+</button>
           </div>
           <button class="form__buttons form__button--make-list" id="form__button--make-list" type="button" disabled>Make Task List</button>
           <button class="form__buttons form__button--clear" id="form__button--clear" type="button" disabled>Clear All</button>
         </fieldset>
-        <section class="form__section--filter">
+        <section class="form__section">
           <button class="form__buttons form__button--filter" id="form__button--filter" type="button">Filter by Urgency</button>
         </section>
       </form>
     </main>
     <output class="output" id="output">
-      <p class="placeholder">Are you still thinking? Start by entering in a title and some tasks!</p>
+      <p class="output__p">Are you still thinking? Start by entering in a title and some tasks!</p>
     </output>
   </body>
   <script src="todo-list.js" type="text/javascript"></script>
