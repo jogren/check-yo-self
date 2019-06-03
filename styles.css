@@ -105,6 +105,8 @@ label {
   background-color: #1F1f3D;
   color: #FFFFFF;
   font-weight: 700;
+  border: black;
+  border-radius: 2px;
 }
 
 .form__section {
@@ -243,4 +245,9 @@ footer {
 .checkbox-text-active {
   color: #3C6577;
   font-style: italic;
+}
+
+.filter-btn-active {
+ background-color: #EF4A23;
+ border: #782616;
 }

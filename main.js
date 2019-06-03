@@ -9,6 +9,7 @@ var clearBtn = document.getElementById('form__button--clear');
 var searchInput = document.getElementById('nav__input')
 var outputField = document.getElementById('output')
 var placeholderText = document.querySelector('.output__p');
+var urgencyFilterBtn = document.getElementById('form__button--filter');
 
 window.addEventListener('load', handleLoad);
 taskItemBtn.addEventListener('click', appendTaskItems);
@@ -17,6 +18,7 @@ makeListBtn.addEventListener('click', createToDo);
 clearBtn.addEventListener('click', clearAll);
 formInputTitle.addEventListener('keyup', handleBtns);
 taskItemInput.addEventListener('keyup', handleBtns);
+urgencyFilterBtn.addEventListener('click', handleUrgencyBtn);
 searchInput.addEventListener('keyup', handleSearch);
 outputField.addEventListener('click', handleCardBtns);
 
@@ -227,13 +229,12 @@ function findToDo(id) {
 function handleSearch() {
   outputField.innerHTML = '';
   var searchText = searchInput.value.toLowerCase();
-  console.log(searchText);
-  searchAllFilter(searchText);
-  // if(starredIdeasBtn.innerHTML === 'View All Ideas') {
-  //   searchStarFilter(searchText);
-  // } 
-  // else { 
-  //   searchAllFilter(searchText);
+  if(urgencyFilterBtn.classList.contains('filter-btn-active')) {
+    console.log('test');
+    searchUrgentToDos(searchText)
+  } else {
+    searchAllFilter(searchText);
+  }
 }
 
 function searchAllFilter(searchText) {
@@ -246,15 +247,35 @@ function searchAllFilter(searchText) {
   });
 };
 
+function searchUrgentToDos(searchText) {
+  var filteredUrgentToDos = toDoListArray.filter(function(toDo) {
+    return (toDo.title.toLowerCase().includes(searchText) && toDo.urgency === true);
+  });
+  filteredUrgentToDos.forEach(function(toDo) {
+    displayToDoList(toDo);
+  });
+}
 
-// function searchStarFilter(searchText) {
-//   var filteredIdeas = ideaArray.filter(function(idea) {
-//     return (idea.title.toLowerCase().includes(searchText) && idea.star === true || idea.body.toLowerCase().includes(searchText) && idea.star === true);
-//   });
-//   filteredIdeas.forEach(function(idea) {
-//     displayIdeaCard(idea);
-//   });
-// }
+function handleUrgencyBtn() {
+  outputField.innerHTML = '';
+  if(urgencyFilterBtn.classList.contains('filter-btn-active')) {
+    repopulateToDoLists();
+    urgencyFilterBtn.classList.remove('filter-btn-active');
+    // placeholder??
+  } else {
+    showUrgentToDos();
+  }
+}
+
+function showUrgentToDos() {
+  var filteredUrgentToDos = toDoListArray.filter(function(toDo) {
+    return toDo.urgency === true;
+  })
+  filteredUrgentToDos.forEach(function(toDo) {
+    displayToDoList(toDo);
+  })
+  urgencyFilterBtn.classList.add('filter-btn-active');
+}
 
 function handleBtns() {
   var listItems = document.querySelectorAll('.form__list');
