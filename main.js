@@ -60,12 +60,13 @@ function displayToDoList(toDo) {
   var urgency = toDo.urgency ? 'urgent-active.svg' : 'urgent.svg';
   var urgencyText = toDo.urgency ? 'active' : 'inactive';
   var urgencyBackground = toDo.urgency ? 'background-active' : 'background-inactive';
+  var urgencyBorders = toDo.urgency ? 'border-active' : 'border-inactive';
   outputField.insertAdjacentHTML('afterbegin',
     `<article class="article__toDoList ${urgencyBackground}" data-id=${toDo.id}>
       <header>
         <h2>${toDo.title}</h2>
       </header>
-      <section class="section--container">
+      <section class="section--container ${urgencyBorders}">
         <ul class="section__ul--populate">
           ${appendTaskToCard(toDo)}
         </ul>
@@ -77,7 +78,7 @@ function displayToDoList(toDo) {
         </div>
         <div class="footer--containers">
           <input type="image" class="footer__images footer__image--delete"src="images/delete.svg" disabled>
-          <p>DELETE</p>
+          <p class="footer__p--delete">DELETE</p>
         </div>
       </footer>   
     </article>`)
@@ -157,6 +158,17 @@ function togglecheckbox(e) {
   }
 }
 
+function getTaskFromArray(e) {
+  var taskId = e.target.closest('li').getAttribute('data-id')
+  return taskId;
+}
+
+function findTask(targetTaskId, targetTaskArray) {
+  return targetTaskArray.find(function(task) {
+    return task.taskId == targetTaskId;
+  });
+}
+
 function togglecheckboxStyle(e) {
   var checkboxText = e.target.closest('li').querySelector('.section__text--populate')
   checkboxText.classList.toggle('checkbox-text-active');
@@ -176,10 +188,13 @@ function toggleUrgency(e) {
 function toggleUrgencyStyle(e, targetToDo) {
   var urgencyText = e.target.closest('article').querySelector('.footer__text--urgent')
   var urgencyCard = e.target.closest('article')
+  var urgencySection = e.target.closest('article').querySelector('.section--container');
     urgencyText.classList.toggle('active');
-    urgencyText.classList.toggle('inactive');
+    // urgencyText.classList.toggle('inactive');
     urgencyCard.classList.toggle('background-active');
-    urgencyCard.classList.toggle('background-inactive');
+    // urgencyCard.classList.toggle('background-inactive');
+    urgencySection.classList.toggle('border-active');
+    // urgencySection.classList.toggle('border-inactive');
 }
 
 function enableDeleteBtn(targetTaskArray) {
@@ -192,17 +207,6 @@ function enableDeleteBtn(targetTaskArray) {
   if(targetTaskArray.length === completedArray.length) {
     document.querySelector('.footer__image--delete').disabled = false;
   }
-}
-
-function getTaskFromArray(e) {
-  var taskId = e.target.closest('li').getAttribute('data-id')
-  return taskId;
-}
-
-function findTask(targetTaskId, targetTaskArray) {
-  return targetTaskArray.find(function(task) {
-    return task.taskId == targetTaskId;
-  });
 }
 
 function deleteToDoLists(e) {

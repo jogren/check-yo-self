@@ -40,13 +40,17 @@ h1 {
 
 .nav__image {
   height: 20px;
-  background-color: #F3F6F7;
+  background-color: #C8C8C8;
   padding: 10px;
 }
 
 .nav__input {
   height: 40px;
   width: 250px;
+  border-top: #1F1F3D;
+  border-bottom: #1F1F3D;
+  padding-left: 10px;
+  font-size: 14px;
 }
 
 /*MAIN*/
@@ -56,6 +60,7 @@ main {
   grid-area: main;
   display: flex;
   flex-direction: column;
+  min-width: 250px;
 }
 
 fieldset {
@@ -111,7 +116,7 @@ label {
 
 .form__section {
   padding: 0.35em 0.75em 0.625em;
-  border-top: black 1px solid;
+  border-top: #3C6577 2px solid;
 }
 
 .form__button--filter {
@@ -161,17 +166,13 @@ output {
 article {
   display: flex;
   flex-direction: column;
-  border: 1px #C7D3D8 solid;
+  border: 2px #C7D3D8 solid;
   color: #1F1F3D;
   width: 100%;
   padding: 1px;
   break-inside: avoid;
-  /*background-color: #FAFDFF;*/
   margin-bottom: 15px;
-}
-
-header {
-  border-bottom: 1px #C7D3D8 solid;
+  background-color: #FAFDFF;
 }
 
 h2 {
@@ -180,13 +181,10 @@ h2 {
   margin: 7px 10px;
 }
 
-.article__section {
-
-}
-
 .section__text--populate {
   margin: -2px 7px 0px 7px;
   width: 85%;
+  font-weight: 400;
 }
 
 .section__li--populate {
@@ -203,7 +201,6 @@ h2 {
 footer {
   display: flex;
   justify-content: space-between;
-  border-top: 1px #C7D3D8 solid;
 }
 
 .footer--containers {
@@ -219,6 +216,11 @@ footer {
 .footer--containers p {
   font-size: 10px;
   margin: 5px 5px 0px 5px;
+  font-weight: 400;
+}
+
+.footer__p--delete {
+  color: #3C6577;
 }
 
 .inactive {
@@ -231,10 +233,27 @@ footer {
 
 .background-inactive {
  background-color: #FAFDFF;
+ border: 2px #C7D3D8 solid;
 }
 
 .background-active {
   background-color: #FFE89D;
+  border: 2px #FFC30C solid;
+}
+
+.section--container {
+  border-top: 2px #C7D3D8 solid;
+  border-bottom: 2px #C7D3D8 solid;
+}
+
+.border-inactive {
+  border-top: 2px #C7D3D8 solid;
+  border-bottom: 2px #C7D3D8 solid;
+}
+
+.border-active {
+  border-top: 2px #FFC30C solid;
+  border-bottom: 2px #FFC30C solid;
 }
 
 /*.checkbox-text-inactive {
@@ -251,3 +270,40 @@ footer {
  background-color: #EF4A23;
  border: #782616;
 }
+
+/*MEDIA QUERIES*/
+
+@media screen and (max-width: 595px) {
+
+  nav {
+    justify-content: center; 
+    height: 130px;
+  }
+
+  h1 {
+    position: absolute;
+    margin-top: 10px;
+  }
+
+  .nav--search {
+    margin-top: 65px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  .nav--search {
+    margin-bottom: 13px;
+
+}
+
+
