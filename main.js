@@ -4,7 +4,7 @@ var formInputTitle = document.getElementById('form__input--title');
 var taskItemInput = document.getElementById('form__input--item');
 var taskItemBtn = document.getElementById('form__button--plus');
 var formOutput = document.getElementById('form__ul');
-var makeListBtn = document.getElementById('form__button--make-list')
+var makeListBtn = document.getElementById('form__button--make-list');
 var clearBtn = document.getElementById('form__button--clear');
 var searchInput = document.getElementById('nav__input');
 var outputField = document.getElementById('output');
@@ -31,7 +31,7 @@ function handleLoad() {
 
 function handleCardBtns(e) {
   deleteToDoLists(e);
-  togglecheckbox(e);
+  toggleCheckbox(e);
   toggleUrgency(e);
 }
 
@@ -42,7 +42,7 @@ function refillArray() {
     var newArray = JSON.parse(localStorage.getItem('toDoListArray')).map(function(array) {
       return new ToDoList(array.title, array.tasks, array.id, array.urgency);
     });
-    toDoListArray = newArray
+    toDoListArray = newArray;
   }
 }
 
@@ -83,7 +83,7 @@ function displayToDoList(toDo) {
           <p class="footer__p--delete">DELETE</p>
         </div>
       </footer>   
-    </article>`)
+    </article>`);
   taskItems = [];
 }
 
@@ -100,8 +100,12 @@ function appendTaskItems(e) {
   <li class="form__list" data-id=${taskId}>
     <input type="image" src="images/delete.svg" class="form__button--delete-task">
     ${taskItemInput.value}
-  </li>`
+  </li>`;
   formOutput.innerHTML += listItem;
+  createTaskObject(taskId);
+}
+
+function createTaskObject(taskId) {
   var taskObject = {
     task: taskItemInput.value,
     taskId: taskId,
@@ -111,29 +115,6 @@ function appendTaskItems(e) {
   taskItemInput.value = "";
   handleBtns();
 }
-
-// function appendTaskItems(e) {
-//   e.preventDefault();
-//   var taskId = Date.now()
-//   var listItem = `
-//   <li class="form__list" data-id=${taskId}>
-//     <input type="image" src="images/delete.svg" class="form__button--delete-task">
-//     ${taskItemInput.value}
-//   </li>`
-//   formOutput.innerHTML += listItem;
-//   createTaskObject(taskId);
-// }
-
-// function createTaskObject(taskId) {
-//   var taskObject = {
-//     task: taskItemInput.value,
-//     taskId: taskId,
-//     checked: false
-//   }
-//   taskItems.push(taskObject);
-//   taskItemInput.value = "";
-//   handleBtns();
-// }
 
 function deletePreviewTask(e) {
   if (e.target.classList.contains('form__button--delete-task')) {
@@ -149,42 +130,45 @@ function deletePreviewTaskFromArray(e) {
     if (item.taskId != itemId) {
       return item;
     }
-  })
+  });
   taskItems = filteredArray;
 }
 
 function appendTaskToCard(toDo) {
   var tasksIteration = '';
-  for (var i = 0; i < toDo.tasks.length; i++){
-  var checkbox = toDo.tasks[i].checked ? 'checkbox-active.svg' : 'checkbox.svg'
+  for (var i = 0; i < toDo.tasks.length; i++) {
+  var checkbox = toDo.tasks[i].checked ? 'checkbox-active.svg' : 'checkbox.svg';
   var checkboxText = toDo.tasks[i].checked ? 'checkbox-text-active' : 'checkbox-text-inactive';
     tasksIteration += `
       <li class="section__li" data-id=${toDo.tasks[i].taskId}>
         <input type="image" src="images/${checkbox} " class="section__image--checkbox">
         <p class="section__p--populate ${checkboxText}">${toDo.tasks[i].task}</p>
-      </li>
-      `
+      </li>`;
   } 
   return tasksIteration;
 }
 
-function togglecheckbox(e) {
+function toggleCheckbox(e) {
   if (e.target.classList.contains('section__image--checkbox')) {
     var targetTodo = getToDoFromArray(e);
     var targetTaskArray = getToDoFromArray(e).tasks;
     var targetTaskId = getTaskFromArray(e);
     var taskObject = findTask(targetTaskId, targetTaskArray);
     targetTodo.updateTask(taskObject.taskId);
-    var checkboxPath = taskObject.checked ? 'images/checkbox-active.svg' : 'images/checkbox.svg'
-    e.target.setAttribute('src', checkboxPath)
-    togglecheckboxStyle(e);
-    var article = e.target.closest('article');
-    enableDeleteBtn(targetTaskArray, article);
+    toggleCheckboxOnDOM(e, taskObject, targetTaskArray);
   }
 }
 
+function toggleCheckboxOnDOM(e, taskObject, targetTaskArray) {
+  var checkboxPath = taskObject.checked ? 'images/checkbox-active.svg' : 'images/checkbox.svg';
+  e.target.setAttribute('src', checkboxPath);
+  toggleCheckboxStyle(e);
+  var article = e.target.closest('article');
+  enableDeleteBtn(targetTaskArray, article);
+}
+
 function getTaskFromArray(e) {
-  var taskId = e.target.closest('li').getAttribute('data-id')
+  var taskId = e.target.closest('li').getAttribute('data-id');
   return taskId;
 }
 
@@ -194,8 +178,8 @@ function findTask(targetTaskId, targetTaskArray) {
   });
 }
 
-function togglecheckboxStyle(e) {
-  var checkboxText = e.target.closest('li').querySelector('.section__p--populate')
+function toggleCheckboxStyle(e) {
+  var checkboxText = e.target.closest('li').querySelector('.section__p--populate');
   checkboxText.classList.toggle('checkbox-text-active');
   checkboxText.classList.toggle('checkbox-text-inactive');
 }
@@ -204,22 +188,19 @@ function toggleUrgency(e) {
   if (e.target.classList.contains('footer__image--urgent')) {
   var targetToDo = getToDoFromArray(e);
   targetToDo.updateToDo(); 
-  var urgencyPath = targetToDo.urgency ? 'images/urgent-active.svg' : 'images/urgent.svg'
-  e.target.setAttribute('src', urgencyPath)
+  var urgencyPath = targetToDo.urgency ? 'images/urgent-active.svg' : 'images/urgent.svg';
+  e.target.setAttribute('src', urgencyPath);
   toggleUrgencyStyle(e, targetToDo);
   }
 }
 
 function toggleUrgencyStyle(e, targetToDo) {
-  var urgencyText = e.target.closest('article').querySelector('.footer__p--urgent')
-  var urgencyCard = e.target.closest('article')
+  var urgencyText = e.target.closest('article').querySelector('.footer__p--urgent');
+  var urgencyCard = e.target.closest('article');
   var urgencySection = e.target.closest('article').querySelector('.section--container');
-    urgencyText.classList.toggle('active');
-    // urgencyText.classList.toggle('inactive');
-    urgencyCard.classList.toggle('background-active');
-    // urgencyCard.classList.toggle('background-inactive');
-    urgencySection.classList.toggle('border-active');
-    // urgencySection.classList.toggle('border-inactive');
+  urgencyText.classList.toggle('active');
+  urgencyCard.classList.toggle('background-active');
+  urgencySection.classList.toggle('border-active');
 }
 
 function enableDeleteBtn(targetTaskArray, article) {
@@ -258,7 +239,7 @@ function handleSearch() {
   outputField.innerHTML = '';
   var searchText = searchInput.value.toLowerCase();
   if(urgencyFilterBtn.classList.contains('filter-btn-active')) {
-    searchUrgentToDos(searchText)
+    searchUrgentToDos(searchText);
   } else {
     searchAllFilter(searchText);
   }
@@ -266,13 +247,12 @@ function handleSearch() {
 
 function searchAllFilter(searchText) {
   var filteredToDos = toDoListArray.filter(function(toDo) {
-    return (toDo.title.toLowerCase().includes(searchText)
-  );
+    return (toDo.title.toLowerCase().includes(searchText));
   });
   filteredToDos.forEach(function(toDo) {
     displayToDoList(toDo);
   });
-};
+}
 
 function searchUrgentToDos(searchText) {
   var filteredUrgentToDos = toDoListArray.filter(function(toDo) {
@@ -288,21 +268,19 @@ function handleUrgencyBtn() {
   if(urgencyFilterBtn.classList.contains('filter-btn-active')) {
     repopulateToDoLists();
     urgencyFilterBtn.classList.remove('filter-btn-active');
-    // outputField.removeChild(urgencyPlaceholderText);;
   } else {
     showUrgentToDos();
     urgentPlaceholder();
-    // urgencyPlaceholder();
   }
 }
 
 function showUrgentToDos() {
   var filteredUrgentToDos = toDoListArray.filter(function(toDo) {
     return toDo.urgency === true;
-  })
+  });
   filteredUrgentToDos.forEach(function(toDo) {
     displayToDoList(toDo);
-  })
+  });
   urgencyFilterBtn.classList.add('filter-btn-active');
 }
 
@@ -332,7 +310,7 @@ function urgentPlaceholderOnLoad() {
 
 function urgentPlaceholder() {
   var filteredToDos = toDoListArray.filter(function(toDo) {
-    return (toDo.urgency === true)
+    return (toDo.urgency === true);
   });
   if (filteredToDos.length == 0) {
     outputField.appendChild(urgencyPlaceholderText);

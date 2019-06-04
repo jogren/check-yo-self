@@ -22,9 +22,7 @@ class ToDoList {
 
   updateToDo() {
     this.urgency = !this.urgency;
-
     this.saveToStorage(toDoListArray);
-
   }
 
   updateTask(id) {
@@ -32,8 +30,6 @@ class ToDoList {
       return item.taskId === id;
     })
   task.checked = !task.checked;
-
   this.saveToStorage(toDoListArray);
   }
-
 }

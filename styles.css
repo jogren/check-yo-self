@@ -20,7 +20,8 @@ nav {
   background-color: #1F1F3D;
   display: flex;
   justify-content: space-between;
-  padding: 0px 10px;}
+  padding: 0px 10px;
+}
 
 h1 {
   display: flex;
@@ -165,15 +166,9 @@ output {
   text-align: center;
 }
 
-/*.urgency--text {
-  display: none;
-}*/
-
 .hidden {
   display: none;
 }
-
-
 
 /*TO DO LIST*/
 
@@ -270,11 +265,6 @@ footer {
   border-bottom: 2px #FFC30C solid;
 }
 
-/*.checkbox-text-inactive {
-  font-style: normal;
-  color: black;
-}*/
-
 .checkbox-text-active {
   color: #3C6577;
   font-style: italic;
@@ -313,10 +303,19 @@ footer {
     flex-direction: column;
   }
 
+  .nav__input {
+    width: 90%;
+  }
+
+  .nav--search {
+    width: 99%;
+  }
+
   output {
     display: flex;
     flex-direction: column;
     height: fit-content;
+    padding: 20px 18px 20px 13px;
   }
 
   .output__p--urgency,
