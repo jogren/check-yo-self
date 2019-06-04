@@ -1,32 +1,32 @@
 body {
+  box-sizing: border-box;
   display: grid;
   font-family: Open Sans, sans-serif;
   font-weight: 300;
-  height: 100vh;
-  box-sizing: border-box;
-  grid-template-columns: 1fr 2fr;
-  grid-template-rows: 1fr 10fr;
   grid-template-areas:
   "nav nav"
   "main output"
   "main ouput";
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr 10fr;
+  height: 100vh;
 } 
 
 /*NAV*/
 
 nav {
-  height: 70px;
-  grid-area: nav;
   background-color: #1F1F3D;
   display: flex;
+  grid-area: nav;
+  height: 70px;
   justify-content: space-between;
   padding: 0px 10px;
 }
 
 h1 {
-  display: flex;
   align-items: center;
   color: #FFFFFF;
+  display: flex;
   font-size: 36px;
 }
 
@@ -35,32 +35,32 @@ h1 {
 }
 
 .nav--search {
-  display: flex;
   align-items: center;
+  display: flex;
 }
 
 .nav__image {
-  height: 20px;
   background-color: #C8C8C8;
+  height: 20px;
   padding: 10px;
 }
 
 .nav__input {
-  height: 40px;
-  width: 250px;
-  border-top: #1F1F3D;
   border-bottom: #1F1F3D;
-  padding-left: 10px;
+  border-top: #1F1F3D;
   font-size: 14px;
+  height: 40px;
+  padding-left: 10px;
+  width: 250px;
 }
 
-/*MAIN*/
+/*MAIN & FORM*/
 
 main {
   background-color: #587A8A;
-  grid-area: main;
   display: flex;
   flex-direction: column;
+  grid-area: main;
   min-width: 250px;
 }
 
@@ -79,10 +79,10 @@ label {
 }
 
 .form__input--title {
-  width: 99%;
   height: 40px;
   margin-bottom: 10px;
   margin-top: 5px;
+  width: 99%;
 }
 
 .form__div {
@@ -92,32 +92,32 @@ label {
 }
 
 .form__input--item {
-  width: 89%;
   height: 40px;
+  width: 89%;
 }
 
 .form__button--plus {
   background-color: #1F1f3D;
   color: #FFFFFF;
   font-size: 36px;
-  width: 45px;
   font-weight: 300;
+  width: 45px;
 }
 
 .form__buttons {
-  width: 100%;
-  height: 40px;
-  margin-bottom: 15px;
   background-color: #1F1f3D;
+  border-radius: 2px;
+  border: black;
   color: #FFFFFF;
   font-weight: 700;
-  border: black;
-  border-radius: 2px;
+  height: 40px;
+  margin-bottom: 15px;
+  width: 100%;
 }
 
 .form__section {
-  padding: 0.35em 0.75em 0.625em;
   border-top: #3C6577 2px solid;
+  padding: 0.35em 0.75em 0.625em;
 }
 
 .form__button--filter {
@@ -130,9 +130,9 @@ label {
 }
 
 .form__list {
-  list-style: none;
-  font-size: 18px;
   color: #FFFFFF;
+  font-size: 18px;
+  list-style: none;
   margin: 0px 0px 10px -20px;
 }
 
@@ -145,9 +145,9 @@ label {
 
 output {
   background-color: #F3F6F7;
-  grid-area: output;
-  columns: 2 250px;
   column-gap: 20px;
+  columns: 2 250px;
+  grid-area: output;
   height: 100vh;
   padding: 20px;
 }
@@ -173,34 +173,34 @@ output {
 /*TO DO LIST*/
 
 article {
+  background-color: #FAFDFF;
+  border: 2px #C7D3D8 solid;
+  break-inside: avoid;
+  color: #1F1F3D;
   display: flex;
   flex-direction: column;
-  border: 2px #C7D3D8 solid;
-  color: #1F1F3D;
-  width: 100%;
-  padding: 1px;
-  break-inside: avoid;
   margin-bottom: 15px;
-  background-color: #FAFDFF;
+  padding: 1px;
+  width: 100%;
 }
 
 h2 {
-  font-size: 18px;
   color: #1F1F3D;
+  font-size: 18px;
   margin: 7px 10px;
 }
 
 .section__p--populate {
+  font-weight: 400;
   margin: -2px 7px 0px 7px;
   width: 85%;
-  font-weight: 400;
 }
 
 .section__li {
-  list-style: none;
-  margin-left: -25px;
-  margin-bottom: 20px;
   display: flex;
+  list-style: none;
+  margin-bottom: 20px;
+  margin-left: -25px;
 }
 
 .section__image--checkbox {
@@ -213,9 +213,9 @@ footer {
 }
 
 .footer__div {
-  padding: 8px 8px 5px 8px;
   display: flex;
   flex-direction: column;
+  padding: 8px 8px 5px 8px;
 }
 
 .footer__image {
@@ -224,13 +224,15 @@ footer {
 
 .footer__div p {
   font-size: 10px;
-  margin: 5px 5px 0px 5px;
   font-weight: 400;
+  margin: 5px 5px 0px 5px;
 }
 
 .footer__p--delete {
   color: #3C6577;
 }
+
+/*ACTIVE/INACTIVE*/
 
 .inactive {
   color: #3C6577;
@@ -251,18 +253,18 @@ footer {
 }
 
 .section--container {
-  border-top: 2px #C7D3D8 solid;
   border-bottom: 2px #C7D3D8 solid;
+  border-top: 2px #C7D3D8 solid;
 }
 
 .border-inactive {
-  border-top: 2px #C7D3D8 solid;
   border-bottom: 2px #C7D3D8 solid;
+  border-top: 2px #C7D3D8 solid;
 }
 
 .border-active {
-  border-top: 2px #FFC30C solid;
   border-bottom: 2px #FFC30C solid;
+  border-top: 2px #FFC30C solid;
 }
 
 .checkbox-text-active {
@@ -280,19 +282,19 @@ footer {
 @media screen and (max-width: 595px) {
 
   nav {
-    justify-content: center; 
     height: 120px;
+    justify-content: center; 
   }
 
   h1 {
-    position: absolute;
-    margin-top: 10px;
     font-size: 32px;
+    margin-top: 10px;
+    position: absolute;
   }
 
   .nav--search {
-    margin-top: 65px;
     margin-bottom: 13px;
+    margin-top: 65px;
   }
 }
 

@@ -47,8 +47,6 @@ function refillArray() {
 }
 
 function createToDo() {
-  // var tasksOnDOM = document.querySelectorAll('.form__list');
-  // Create helper function to make task object, pass through tasksOnDOM - Use map
   var toDo = new ToDoList(formInputTitle.value, taskItems, Date.now(), false);
   toDoListArray.push(toDo);
   toDo.saveToStorage(toDoListArray);
