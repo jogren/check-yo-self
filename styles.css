@@ -60,6 +60,7 @@ main {
   grid-area: main;
   display: flex;
   flex-direction: column;
+  min-width: 250px;
 }
 
 fieldset {
@@ -269,3 +270,40 @@ footer {
  background-color: #EF4A23;
  border: #782616;
 }
+
+/*MEDIA QUERIES*/
+
+@media screen and (max-width: 595px) {
+
+  nav {
+    justify-content: center; 
+    height: 130px;
+  }
+
+  h1 {
+    position: absolute;
+    margin-top: 10px;
+  }
+
+  .nav--search {
+    margin-top: 65px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  .nav--search {
+    margin-bottom: 13px;
+
+}
+
+

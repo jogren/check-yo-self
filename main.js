@@ -158,6 +158,17 @@ function togglecheckbox(e) {
   }
 }
 
+function getTaskFromArray(e) {
+  var taskId = e.target.closest('li').getAttribute('data-id')
+  return taskId;
+}
+
+function findTask(targetTaskId, targetTaskArray) {
+  return targetTaskArray.find(function(task) {
+    return task.taskId == targetTaskId;
+  });
+}
+
 function togglecheckboxStyle(e) {
   var checkboxText = e.target.closest('li').querySelector('.section__text--populate')
   checkboxText.classList.toggle('checkbox-text-active');
@@ -196,17 +207,6 @@ function enableDeleteBtn(targetTaskArray) {
   if(targetTaskArray.length === completedArray.length) {
     document.querySelector('.footer__image--delete').disabled = false;
   }
-}
-
-function getTaskFromArray(e) {
-  var taskId = e.target.closest('li').getAttribute('data-id')
-  return taskId;
-}
-
-function findTask(targetTaskId, targetTaskArray) {
-  return targetTaskArray.find(function(task) {
-    return task.taskId == targetTaskId;
-  });
 }
 
 function deleteToDoLists(e) {
