@@ -3,12 +3,13 @@ var taskItems = [];
 var formInputTitle = document.getElementById('form__input--title');
 var taskItemInput = document.getElementById('form__input--item');
 var taskItemBtn = document.getElementById('form__button--plus');
-var formOutput = document.getElementById('form__ul--output');
+var formOutput = document.getElementById('form__ul');
 var makeListBtn = document.getElementById('form__button--make-list')
 var clearBtn = document.getElementById('form__button--clear');
-var searchInput = document.getElementById('nav__input')
-var outputField = document.getElementById('output')
+var searchInput = document.getElementById('nav__input');
+var outputField = document.getElementById('output');
 var placeholderText = document.querySelector('.output__p');
+var urgencyPlaceholderText = document.querySelector('.output__p--urgency');
 var urgencyFilterBtn = document.getElementById('form__button--filter');
 
 window.addEventListener('load', handleLoad);
@@ -25,6 +26,7 @@ outputField.addEventListener('click', handleCardBtns);
 function handleLoad() {
   refillArray();
   repopulateToDoLists();
+  urgentPlaceholderOnLoad();
 }
 
 function handleCardBtns(e) {
@@ -62,22 +64,22 @@ function displayToDoList(toDo) {
   var urgencyBackground = toDo.urgency ? 'background-active' : 'background-inactive';
   var urgencyBorders = toDo.urgency ? 'border-active' : 'border-inactive';
   outputField.insertAdjacentHTML('afterbegin',
-    `<article class="article__toDoList ${urgencyBackground}" data-id=${toDo.id}>
+    `<article class="article ${urgencyBackground}" data-id=${toDo.id}>
       <header>
         <h2>${toDo.title}</h2>
       </header>
       <section class="section--container ${urgencyBorders}">
-        <ul class="section__ul--populate">
+        <ul class="section__ul">
           ${appendTaskToCard(toDo)}
         </ul>
       </section>
       <footer>
-        <div class="footer--containers">
-          <input type="image" class="footer__images footer__image--urgent"src="images/${urgency}">
-          <p class="footer__text--urgent ${urgencyText}">URGENT</p>
+        <div class="footer__div">
+          <input type="image" class="footer__image footer__image--urgent"src="images/${urgency}">
+          <p class="footer__p--urgent ${urgencyText}">URGENT</p>
         </div>
-        <div class="footer--containers">
-          <input type="image" class="footer__images footer__image--delete"src="images/delete.svg" disabled>
+        <div class="footer__div">
+          <input type="image" class="footer__image footer__image--delete"src="images/delete.svg" disabled>
           <p class="footer__p--delete">DELETE</p>
         </div>
       </footer>   
@@ -86,7 +88,6 @@ function displayToDoList(toDo) {
 }
 
 function repopulateToDoLists() {
-  console.log(toDoListArray)
   for (var i = 0; i < toDoListArray.length; i++) {
     displayToDoList(toDoListArray[i]);
   }
@@ -110,6 +111,29 @@ function appendTaskItems(e) {
   taskItemInput.value = "";
   handleBtns();
 }
+
+// function appendTaskItems(e) {
+//   e.preventDefault();
+//   var taskId = Date.now()
+//   var listItem = `
+//   <li class="form__list" data-id=${taskId}>
+//     <input type="image" src="images/delete.svg" class="form__button--delete-task">
+//     ${taskItemInput.value}
+//   </li>`
+//   formOutput.innerHTML += listItem;
+//   createTaskObject(taskId);
+// }
+
+// function createTaskObject(taskId) {
+//   var taskObject = {
+//     task: taskItemInput.value,
+//     taskId: taskId,
+//     checked: false
+//   }
+//   taskItems.push(taskObject);
+//   taskItemInput.value = "";
+//   handleBtns();
+// }
 
 function deletePreviewTask(e) {
   if (e.target.classList.contains('form__button--delete-task')) {
@@ -135,9 +159,9 @@ function appendTaskToCard(toDo) {
   var checkbox = toDo.tasks[i].checked ? 'checkbox-active.svg' : 'checkbox.svg'
   var checkboxText = toDo.tasks[i].checked ? 'checkbox-text-active' : 'checkbox-text-inactive';
     tasksIteration += `
-      <li class="section__li--populate" data-id=${toDo.tasks[i].taskId}>
-        <input type="image" src="images/${checkbox} " class="article__image--checkbox">
-        <p class="section__text--populate ${checkboxText}">${toDo.tasks[i].task}</p>
+      <li class="section__li" data-id=${toDo.tasks[i].taskId}>
+        <input type="image" src="images/${checkbox} " class="section__image--checkbox">
+        <p class="section__p--populate ${checkboxText}">${toDo.tasks[i].task}</p>
       </li>
       `
   } 
@@ -145,7 +169,7 @@ function appendTaskToCard(toDo) {
 }
 
 function togglecheckbox(e) {
-  if (e.target.classList.contains('article__image--checkbox')) {
+  if (e.target.classList.contains('section__image--checkbox')) {
     var targetTodo = getToDoFromArray(e);
     var targetTaskArray = getToDoFromArray(e).tasks;
     var targetTaskId = getTaskFromArray(e);
@@ -154,7 +178,8 @@ function togglecheckbox(e) {
     var checkboxPath = taskObject.checked ? 'images/checkbox-active.svg' : 'images/checkbox.svg'
     e.target.setAttribute('src', checkboxPath)
     togglecheckboxStyle(e);
-    enableDeleteBtn(targetTaskArray);
+    var article = e.target.closest('article');
+    enableDeleteBtn(targetTaskArray, article);
   }
 }
 
@@ -170,7 +195,7 @@ function findTask(targetTaskId, targetTaskArray) {
 }
 
 function togglecheckboxStyle(e) {
-  var checkboxText = e.target.closest('li').querySelector('.section__text--populate')
+  var checkboxText = e.target.closest('li').querySelector('.section__p--populate')
   checkboxText.classList.toggle('checkbox-text-active');
   checkboxText.classList.toggle('checkbox-text-inactive');
 }
@@ -186,7 +211,7 @@ function toggleUrgency(e) {
 }
 
 function toggleUrgencyStyle(e, targetToDo) {
-  var urgencyText = e.target.closest('article').querySelector('.footer__text--urgent')
+  var urgencyText = e.target.closest('article').querySelector('.footer__p--urgent')
   var urgencyCard = e.target.closest('article')
   var urgencySection = e.target.closest('article').querySelector('.section--container');
     urgencyText.classList.toggle('active');
@@ -197,21 +222,20 @@ function toggleUrgencyStyle(e, targetToDo) {
     // urgencySection.classList.toggle('border-inactive');
 }
 
-function enableDeleteBtn(targetTaskArray) {
+function enableDeleteBtn(targetTaskArray, article) {
   var completedArray = targetTaskArray.filter(function(task) {
     if(task.checked === true) {
       return task;
-      console.log(completedArray);
     }
   })
   if(targetTaskArray.length === completedArray.length) {
-    document.querySelector('.footer__image--delete').disabled = false;
+    article.querySelector('.footer__image--delete').disabled = false;
   }
 }
 
 function deleteToDoLists(e) {
   if (e.target.classList.contains('footer__image--delete')) {
-    e.target.closest('.article__toDoList').remove();
+    e.target.closest('.article').remove();
     var targetToDo = getToDoFromArray(e);
     targetToDo.deleteFromStorage(targetToDo);
   }
@@ -219,7 +243,7 @@ function deleteToDoLists(e) {
 }
 
 function getToDoFromArray(e) {
-  var toDoId = e.target.closest('.article__toDoList').getAttribute('data-id');
+  var toDoId = e.target.closest('.article').getAttribute('data-id');
   var targetToDo = findToDo(toDoId);
   return targetToDo;
 }
@@ -234,7 +258,6 @@ function handleSearch() {
   outputField.innerHTML = '';
   var searchText = searchInput.value.toLowerCase();
   if(urgencyFilterBtn.classList.contains('filter-btn-active')) {
-    console.log('test');
     searchUrgentToDos(searchText)
   } else {
     searchAllFilter(searchText);
@@ -265,9 +288,11 @@ function handleUrgencyBtn() {
   if(urgencyFilterBtn.classList.contains('filter-btn-active')) {
     repopulateToDoLists();
     urgencyFilterBtn.classList.remove('filter-btn-active');
-    // placeholder??
+    // outputField.removeChild(urgencyPlaceholderText);;
   } else {
     showUrgentToDos();
+    urgentPlaceholder();
+    // urgencyPlaceholder();
   }
 }
 
@@ -298,5 +323,18 @@ function clearAll() {
 function placeholder() {
   if (toDoListArray.length === 0) {
     placeholderText.classList.remove('hidden');
+  }
+}
+
+function urgentPlaceholderOnLoad() {
+  outputField.removeChild(urgencyPlaceholderText);
+}
+
+function urgentPlaceholder() {
+  var filteredToDos = toDoListArray.filter(function(toDo) {
+    return (toDo.urgency === true)
+  });
+  if (filteredToDos.length == 0) {
+    outputField.appendChild(urgencyPlaceholderText);
   }
 }
