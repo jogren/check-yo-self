@@ -5,6 +5,7 @@
     <link href="styles.css" type="text/css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Check Yo' Self</title>
   </head>
   <body>
@@ -21,7 +22,7 @@
           <legend>Task Input</legend>
           <label class="form__label--title" for="form__input--title">Task Title</label>
           <input class="form__input--title" id="form__input--title" type="text">
-          <ul class="form__ul--output" id="form__ul--output">
+          <ul class="form__ul" id="form__ul">
           </ul>
           <label class= "form__label--item" for="form__input--item">Task Item</label>
           <div class="form__div">
@@ -38,6 +39,7 @@
     </main>
     <output class="output" id="output">
       <p class="output__p">Are you still thinking? Start by entering in a title and some tasks!</p>
+      <p class="output__p--urgency">Please filter some ideas!</p>
     </output>
   </body>
   <script src="todo-list.js" type="text/javascript"></script>

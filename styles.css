@@ -125,6 +125,7 @@ label {
 
 .form__button--delete-task {
   height: 16px;
+  margin-bottom: -2px;
 }
 
 .form__list {
@@ -147,7 +148,7 @@ output {
   columns: 2 250px;
   column-gap: 20px;
   height: 100vh;
-  padding: 15px;
+  padding: 20px;
 }
 
 .output__p {
@@ -157,9 +158,22 @@ output {
   text-align: center;
 }
 
+.output__p--urgency {
+  font-family: 'Indie Flower', cursive;
+  font-size: 60px;
+  position: absolute;
+  text-align: center;
+}
+
+/*.urgency--text {
+  display: none;
+}*/
+
 .hidden {
   display: none;
 }
+
+
 
 /*TO DO LIST*/
 
@@ -181,20 +195,20 @@ h2 {
   margin: 7px 10px;
 }
 
-.section__text--populate {
+.section__p--populate {
   margin: -2px 7px 0px 7px;
   width: 85%;
   font-weight: 400;
 }
 
-.section__li--populate {
+.section__li {
   list-style: none;
   margin-left: -25px;
   margin-bottom: 20px;
   display: flex;
 }
 
-.article__image--checkbox {
+.section__image--checkbox {
   height: 15px;
 }
 
@@ -203,17 +217,17 @@ footer {
   justify-content: space-between;
 }
 
-.footer--containers {
+.footer__div {
   padding: 8px 8px 5px 8px;
   display: flex;
   flex-direction: column;
 }
 
-.footer__images {
+.footer__image {
   height: 22px;
 }
 
-.footer--containers p {
+.footer__div p {
   font-size: 10px;
   margin: 5px 5px 0px 5px;
   font-weight: 400;
@@ -277,16 +291,18 @@ footer {
 
   nav {
     justify-content: center; 
-    height: 130px;
+    height: 120px;
   }
 
   h1 {
     position: absolute;
     margin-top: 10px;
+    font-size: 32px;
   }
 
   .nav--search {
     margin-top: 65px;
+    margin-bottom: 13px;
   }
 }
 
@@ -297,13 +313,13 @@ footer {
     flex-direction: column;
   }
 
-  h1 {
-    font-size: 32px;
+  output {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
   }
 
-  .nav--search {
-    margin-bottom: 13px;
-
-}
-
-
+  .output__p--urgency,
+  .output__p {
+    font-size: 46px;
+  }
