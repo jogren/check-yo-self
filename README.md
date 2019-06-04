@@ -1,8 +1,8 @@
 # Check Yo' Self
 
-##### Check Yo' Self is the fourth major project in Mod 1 of the Front End Enginnering program at the Turing School of Software and Design.
+###### Check Yo' Self is the fourth major project in Mod 1 of the Front End Enginnering program at the Turing School of Software and Design.
 
-##### This website offers a checklist project management platform to manage to-do lists and the tasks within them. 
+###### This website offers a checklist project management platform to manage to-do lists and the tasks within them. 
 
 # Learning Goals
 
